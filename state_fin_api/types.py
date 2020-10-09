@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 class StateCode(str, Enum):
     tx = "tx"
+    mi = "mi"
 
 
 class HouseLevel(str, Enum):

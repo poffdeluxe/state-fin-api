@@ -19,4 +19,4 @@ An OpenAPI endpoint is also provided.
 
 ## Demo
 A demo instance is currently running on Heroku at: https://state-fin-api.herokuapp.com
-At the moment, the demo instance only has data for the state of Texas
+At the moment, the demo instance only has data for the state of Texas and Michigan
