@@ -114,7 +114,7 @@ class Contribution(BaseModel):
     occupation: str
     job_title: str
 
-    addtl_data: dict
+    addtl_data: Optional[dict]
 
 
 class Contributions(BaseModel):
