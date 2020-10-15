@@ -1,7 +1,7 @@
 import humps
 
 
-def serialize_summary_result(raw_result, start_date, end_date):
+def serialize_contrib_summary_result(raw_result, start_date, end_date):
     contrib_by_type = {
         "individual": {"count": 0, "total_amount": 0, "avg_amount": 0},
         "entity": {"count": 0, "total_amount": 0, "avg_amount": 0},

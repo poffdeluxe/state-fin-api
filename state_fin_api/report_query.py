@@ -5,7 +5,7 @@ DEFAULT_LIMIT = 500
 
 DEFAULT_START_DATE = datetime.datetime.strptime("2019-01-01", "%Y-%m-%d").date()
 
-DEFAULT_CONTRIB_SUMMARY_QUERY = {
+DEFAULT_SUMMARY_QUERY = {
     "size": 0,
     "track_total_hits": True,
     "aggs": {
@@ -21,7 +21,7 @@ DEFAULT_CONTRIB_SUMMARY_QUERY = {
     "query": {"bool": {"filter": []}},
 }
 
-DEFAULT_CONTRIB_RECORDS_QUERY = {
+DEFAULT_RECORDS_QUERY = {
     "size": DEFAULT_LIMIT,
     "from": 0,
     "track_total_hits": True,
@@ -29,23 +29,15 @@ DEFAULT_CONTRIB_RECORDS_QUERY = {
     "query": {"bool": {"filter": []}},
 }
 
-DEFAULT_REPORT_RECORDS_QUERY = {
-    "size": DEFAULT_LIMIT,
-    "from": 0,
-    "track_total_hits": True,
-    "sort": [{"received_date": {"order": "desc"}}, {"report_id": {"order": "desc"}}],
-    "query": {"bool": {"filter": []}},
-}
 
-
-def build_contrib_summary_query(
+def build_summary_query(
     start_date=DEFAULT_START_DATE,
     end_date=datetime.datetime.now(),
     filters=[],
     addtl_aggs={},
     include_sample=False,
 ):
-    query = copy.deepcopy(DEFAULT_CONTRIB_SUMMARY_QUERY)
+    query = copy.deepcopy(DEFAULT_SUMMARY_QUERY)
 
     if include_sample:
         query["size"] = 1
@@ -63,14 +55,14 @@ def build_contrib_summary_query(
     return query
 
 
-def build_contrib_records_query(
+def build_records_query(
     start_date=DEFAULT_START_DATE,
     end_date=datetime.datetime.now(),
     size=DEFAULT_LIMIT,
     offset=0,
     filters=[],
 ):
-    query = copy.deepcopy(DEFAULT_CONTRIB_RECORDS_QUERY)
+    query = copy.deepcopy(DEFAULT_RECORDS_QUERY)
 
     # "legacy" pagination
     query["size"] = size
@@ -79,29 +71,6 @@ def build_contrib_records_query(
     # Add time range
     query["query"]["bool"]["filter"].append(
         {"range": {"contribution_date": {"gte": start_date, "lte": end_date}}}
-    )
-
-    query["query"]["bool"]["filter"].extend(filters)
-
-    return query
-
-
-def build_report_records_query(
-    start_date=DEFAULT_START_DATE,
-    end_date=datetime.datetime.now(),
-    size=DEFAULT_LIMIT,
-    offset=0,
-    filters=[],
-):
-    query = copy.deepcopy(DEFAULT_REPORT_RECORDS_QUERY)
-
-    # "legacy" pagination
-    query["size"] = size
-    query["from"] = offset
-
-    # Add time range
-    query["query"]["bool"]["filter"].append(
-        {"range": {"received_date": {"gte": start_date, "lte": end_date}}}
     )
 
     query["query"]["bool"]["filter"].extend(filters)
