@@ -32,7 +32,7 @@ class Candidate(BaseModel):
     name: str
     party: str
     house: HouseLevel
-    district: str
+    district: int
 
 
 class QueryDesc(BaseModel):
@@ -43,6 +43,12 @@ class QueryDesc(BaseModel):
 
 
 class ContribQueryDesc(QueryDesc):
+    offset: int
+    hits: int
+    total: int
+
+
+class ReportQueryDesc(QueryDesc):
     offset: int
     hits: int
     total: int
@@ -117,6 +123,28 @@ class Contribution(BaseModel):
     addtl_data: Optional[dict]
 
 
+class Report(BaseModel):
+    filer: Optional[Filer] = None
+    candidate: Optional[Candidate] = None
+
+    report_id: str
+    type: str
+
+    received_date: datetime.datetime
+
+    period_start_date: datetime.datetime
+    period_end_date: datetime.datetime
+
+    contributions_amount: float
+    expenditures_amount: float
+    ending_balance_amount: float
+
+
 class Contributions(BaseModel):
     records: List[Contribution]
     query: ContribQueryDesc
+
+
+class Reports(BaseModel):
+    records: List[Report]
+    query: ReportQueryDesc
