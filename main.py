@@ -229,7 +229,7 @@ async def get_candidate_summary(
 @app.get(
     "/{state_code}/candidate/{candidate_id}/contribs", response_model=Contributions
 )
-async def get_candidate_contrib_reports(
+async def get_candidate_contrib_records(
     state_code: StateCode,
     candidate_id: str,
     start_date: Optional[datetime.date] = DEFAULT_START_DATE,
